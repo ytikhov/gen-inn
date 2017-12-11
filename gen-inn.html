@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Пример веб-страницы</title>
+  <script type="text/javascript">
+  	function getFullInn(prefixList){
+  		var intPrefix = new Array();
+  		for(var i = 0; i < 10; i++) {
+  			var elem = parseInt(prefixList[i]);
+  			if(isNaN(elem)) {
+  				elem = 0;
+  			}
+  			intPrefix.push(elem);
+  		}
+  		var base11 = 0;
+  		var base12 = 0;
+
+  		base11 = 7  * intPrefix[0]
+               2  * intPrefix[1]
+               4  * intPrefix[2]
+               10 * intPrefix[3]
+               3  * intPrefix[4]
+               5  * intPrefix[5]
+               9  * intPrefix[6]
+               4  * intPrefix[7]
+               6  * intPrefix[8]
+               8  * intPrefix[9];
+  		var n11 = ( base11 % 11 ) % 10;
+      
+  		base12 = 3  * intPrefix[0]
+               7  * intPrefix[1]
+               2  * intPrefix[2]
+               4  * intPrefix[3]
+               10 * intPrefix[4]
+               3  * intPrefix[5]
+               5  * intPrefix[6]
+               9  * intPrefix[7]
+               4  * intPrefix[8]
+               6  * intPrefix[9]
+               8  * n11;
+  		var n12 = ( base12 % 11 ) % 10;
+  		intPrefix.push(n11);
+  		intPrefix.push(n12);
+  		return intPrefix;
+
+  	}
+  	function onGenerate() {
+  		var prefix = document.getElementById("PREFIX").value;
+  		var prefixList = prefix.split('');
+  		var fullInn = getFullInn(prefixList);
+  		document.getElementById("RESULT_INN").value = fullInn.join("");
+  	}
+  </script>
+ </head>
+ <body>
+  <h1>Генератор ИНН</h1>
+  <p>Введите первые 10 цифр ИНН физлица</p>
+  <input type="text" size="40" id="PREFIX" maxlength="10"><br>
+  <button name="GENERATE" onclick="onGenerate()">Сгенерировать</button><br>
+  <input type="text" size="40" readonly="true" id="RESULT_INN">
+ </body>
+</html>
