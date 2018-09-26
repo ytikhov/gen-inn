@@ -16,28 +16,28 @@
   		var base11 = 0;
   		var base12 = 0;
 
-  		base11 = 7  * intPrefix[0]
-               2  * intPrefix[1]
-               4  * intPrefix[2]
-               10 * intPrefix[3]
-               3  * intPrefix[4]
-               5  * intPrefix[5]
-               9  * intPrefix[6]
-               4  * intPrefix[7]
-               6  * intPrefix[8]
+  		base11 = 7  * intPrefix[0] +
+               2  * intPrefix[1] +
+               4  * intPrefix[2] +
+               10 * intPrefix[3] +
+               3  * intPrefix[4] +
+               5  * intPrefix[5] +
+               9  * intPrefix[6] +
+               4  * intPrefix[7] +
+               6  * intPrefix[8] +
                8  * intPrefix[9];
   		var n11 = ( base11 % 11 ) % 10;
 
-  		base12 = 3  * intPrefix[0]
-               7  * intPrefix[1]
-               2  * intPrefix[2]
-               4  * intPrefix[3]
-               10 * intPrefix[4]
-               3  * intPrefix[5]
-               5  * intPrefix[6]
-               9  * intPrefix[7]
-               4  * intPrefix[8]
-               6  * intPrefix[9]
+  		base12 = 3  * intPrefix[0] +
+               7  * intPrefix[1] +
+               2  * intPrefix[2] +
+               4  * intPrefix[3] +
+               10 * intPrefix[4] +
+               3  * intPrefix[5] +
+               5  * intPrefix[6] +
+               9  * intPrefix[7] +
+               4  * intPrefix[8] +
+               6  * intPrefix[9] +
                8  * n11;
   		var n12 = ( base12 % 11 ) % 10;
   		intPrefix.push(n11);
