@@ -27,7 +27,7 @@
                6  * intPrefix[8]
                8  * intPrefix[9];
   		var n11 = ( base11 % 11 ) % 10;
-      
+
   		base12 = 3  * intPrefix[0]
                7  * intPrefix[1]
                2  * intPrefix[2]
@@ -45,19 +45,71 @@
   		return intPrefix;
 
   	}
-  	function onGenerate() {
-  		var prefix = document.getElementById("PREFIX").value;
+  	function getChecksumSnils(s) {
+        var checksum;
+        if (s < 10)
+            checksum = "0" + s.toString();
+        else if (s < 100)
+            checksum = s.toString();
+        else if (s == 100 || s == 101)
+            checksum = "00";
+        else if (s > 101)
+            checksum = getChecksumSnils(s % 101);
+        return checksum;
+    }
+  	function onINNGenerate() {
+  		var prefix = document.getElementById("INN_PREFIX").value;
   		var prefixList = prefix.split('');
   		var fullInn = getFullInn(prefixList);
-  		document.getElementById("RESULT_INN").value = fullInn.join("");
+        document.getElementById("INN_RESULT").value = fullInn.join("");
   	}
+  	function generatePrefixSnils() {
+  	    var prefixSnils = "";
+  	    var prefixSnilsInt = 0;
+  	    while (prefixSnilsInt < 1001998) {
+            for(var i = 0; i < 9; i++) {
+                prefixSnils = prefixSnils + Math.floor(Math.random() * 10).toString();
+            }
+            prefixSnilsInt = parseInt(prefixSnils.substring(0));
+        }
+        return prefixSnils;
+    }
+  	function onSNILSGenerate() {
+        var prefixArray = generatePrefixSnils().split("");
+        var sum = 0;
+        for (var i = 0; i < prefixArray.length; i++) {
+            sum = sum + parseInt(prefixArray[i]) * (9 - i);
+        }
+        var suffixArray = getChecksumSnils(sum).split("");
+        var snils = prefixArray.slice(0, 3).join("") + "-" +
+                    prefixArray.slice(3, 6).join("") + "-" +
+                    prefixArray.slice(6).join("") + " " +
+                    suffixArray.join("");
+
+        document.getElementById("SNILS_RESULT").value = snils;
+    }
   </script>
  </head>
  <body>
-  <h1>Генератор ИНН</h1>
-  <p>Введите первые 10 цифр ИНН физлица</p>
-  <input type="text" size="40" id="PREFIX" maxlength="10"><br>
-  <button name="GENERATE" onclick="onGenerate()">Сгенерировать</button><br>
-  <input type="text" size="40" readonly="true" id="RESULT_INN">
+  <table>
+   <tr>
+    <td><h2>Генерация ИНН</h2></td>
+   </tr>
+   <tr>
+    <td>Введите первые 10 цифр ИНН физлица</td>
+   </tr>
+   <tr>
+    <td><input type="text" size="40" id="INN_PREFIX" maxlength="10"></td>
+    <td><button name="GENERATE_INN" onclick="onINNGenerate()">Сгенерировать</button></td>
+    <td><input type="text" size="40" readonly="true" id="INN_RESULT"></td>
+   </tr>
+   <tr>
+    <td><h2>Генерация СНИЛС</h2></td>
+   </tr>
+   <tr>
+    <td><input type="text" size="40" id="SNILS_RESULT" maxlength="14" readonly="true"></td>
+    <td><button name="GENERATE_SNILS" onclick="onSNILSGenerate()">Сгенерировать</button></td>
+   </tr>
+  </table>
  </body>
 </html>
